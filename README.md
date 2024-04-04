@@ -2,7 +2,8 @@
 
 ## 🧩 ERD
 
-![EFUB_커뮤니티 ERD  (1)](https://github.com/yeojinLee1020/efub4-backend-assignment/assets/113425533/f639db39-9b98-4123-a5d2-245b5a8be252)
+![EFUB_커뮤니티 ERD  (2)](https://github.com/yeojinLee1020/efub4-backend-assignment/assets/113425533/b943eb92-86bd-4f4e-b16f-755171e8c309)
+
 
 
 
