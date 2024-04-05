@@ -1,6 +1,7 @@
 package efub.assignment.community.member.service;
 
 import efub.assignment.community.member.domain.Member;
+import efub.assignment.community.member.dto.MemberUpdateRequestDto;
 import efub.assignment.community.member.dto.SignUpRequestDto;
 import efub.assignment.community.member.repository.MemberRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -31,6 +32,12 @@ public class MemberService {
     public Member findMemberById(Long id) {
         return memberRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("해당 id를 가진 Member를 찾을 수 없습니다.id="+id));
+    }
+
+    public Long update(Long memberId, MemberUpdateRequestDto requestDto) {
+        Member member = findMemberById(memberId);
+        member.updateMember(requestDto.getNickname());
+        return member.getMemberId();
     }
 
 }

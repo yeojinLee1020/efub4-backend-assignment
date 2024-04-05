@@ -2,6 +2,7 @@ package efub.assignment.community.member.controller;
 
 import efub.assignment.community.member.domain.Member;
 import efub.assignment.community.member.dto.MemberResponseDto;
+import efub.assignment.community.member.dto.MemberUpdateRequestDto;
 import efub.assignment.community.member.dto.SignUpRequestDto;
 import efub.assignment.community.member.service.MemberService;
 import jakarta.validation.Valid;
@@ -32,5 +33,13 @@ public class MemberController {
         return MemberResponseDto.from(findMember);
     }
 
+    /* 회원 정보 수정 */
+    @PatchMapping("/profile/{memberId}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public MemberResponseDto update(@PathVariable final Long memberId, @RequestBody @Valid final MemberUpdateRequestDto requestDto) {
+        Long id = memberService.update(memberId, requestDto);
+        Member findMember = memberService.findMemberById(id);
+        return MemberResponseDto.from(findMember);
+    }
 
 }
