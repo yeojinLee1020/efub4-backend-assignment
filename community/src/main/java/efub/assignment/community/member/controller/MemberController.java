@@ -15,12 +15,20 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
     private final MemberService memberService;
 
-    // 회원가입 기능
+    /* 회원가입 기능 */
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
     public MemberResponseDto signUp(@RequestBody @Valid final SignUpRequestDto requestDto) {
         Long id = memberService.signUp(requestDto);
         Member findMember = memberService.findMemberById(id);
+        return MemberResponseDto.from(findMember);
+    }
+
+    /* 회원 조회 기능 1명 */
+    @GetMapping("/{memberId}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public MemberResponseDto getMember(@PathVariable Long memberId) {
+        Member findMember = memberService.findMemberById(memberId);
         return MemberResponseDto.from(findMember);
     }
 
