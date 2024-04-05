@@ -37,6 +37,10 @@ public class Member extends BaseTimeEntity {
     @Column(nullable = false, updatable = false, length = 50)
     private String university;
 
+    @Enumerated(EnumType.STRING)  // 등록상태와 해지로 인식
+    private MemberStatus status;
+
+
     @Builder // 객체 생성
     public Member(String email, String password, String nickname, String studentId, String university) {
         this.email = email;
@@ -49,5 +53,8 @@ public class Member extends BaseTimeEntity {
     public void updateMember(String nickname) {
         this.nickname = nickname;
     }
-    
+
+    public void withdrawMember() {
+        this.status = MemberStatus.UNREGISTERED;
+    }
 }

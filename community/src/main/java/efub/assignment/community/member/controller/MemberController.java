@@ -42,4 +42,11 @@ public class MemberController {
         return MemberResponseDto.from(findMember);
     }
 
+    @PatchMapping("/{memberId}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public String withdraw(@PathVariable long memberId) {
+        memberService.withdraw(memberId);
+        return "성공적으로 탈퇴되었습니다.(휴면)";
+    }
+
 }

@@ -1,6 +1,7 @@
 package efub.assignment.community.member.service;
 
 import efub.assignment.community.member.domain.Member;
+import efub.assignment.community.member.domain.MemberStatus;
 import efub.assignment.community.member.dto.MemberUpdateRequestDto;
 import efub.assignment.community.member.dto.SignUpRequestDto;
 import efub.assignment.community.member.repository.MemberRepository;
@@ -38,6 +39,12 @@ public class MemberService {
         Member member = findMemberById(memberId);
         member.updateMember(requestDto.getNickname());
         return member.getMemberId();
+    }
+
+    @Transactional
+    public void withdraw(Long memberId){
+        Member member = findMemberById(memberId);
+        member.withdrawMember();
     }
 
 }
