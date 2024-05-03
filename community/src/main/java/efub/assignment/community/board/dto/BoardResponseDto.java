@@ -27,7 +27,7 @@ public class BoardResponseDto {
                 board.getBoardName(),
                 board.getExplanation(),
                 board.getNotice(),
-                board.getHostNickName(),
+                board.getMember().getNickname(),
                 board.getCreatedDate(),
                 board.getModifiedDate()
         );

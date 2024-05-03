@@ -1,6 +1,7 @@
 package efub.assignment.community.board.domain;
 
 import efub.assignment.community.global.entity.BaseTimeEntity;
+import efub.assignment.community.member.domain.Member;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -16,8 +17,9 @@ public class Board extends BaseTimeEntity {
     @Column(name = "board_id", updatable = false)
     private Long boardId;
 
-    @Column(nullable = false, length = 25)
-    private String hostNickName;
+    @ManyToOne
+    @JoinColumn(name = "member_id", updatable = true) // member 테이블과 매핑을 통해 게시판의 주인 표현
+    private Member member;
 
     @Column(nullable = false, length = 25)
     private String boardName;
@@ -29,15 +31,14 @@ public class Board extends BaseTimeEntity {
     private String notice;
 
     @Builder
-    public Board(String hostNickName, String boardName, String explanation, String notice) {
-        this.hostNickName = hostNickName;
+    public Board(Member member, String boardName, String explanation, String notice) {
+        this.member = member;
         this.boardName = boardName;
         this.explanation = explanation;
         this.notice = notice;
     }
 
-
-    public void updateBoard(String hostNickName){
-        this.hostNickName = hostNickName;
+    public void updateBoard(Member member){
+        this.member = member;
     }
 }
