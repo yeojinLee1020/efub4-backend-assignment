@@ -73,4 +73,12 @@ public class CommentService {
                 .orElseThrow(()->new EntityNotFoundException("해당 id를 가진 post를 찾을 수 없습니다. id=" + commentId));
         return comment;
     }
+
+    public void deleteComment(Long commentId, Long memberId) {
+        Comment comment = findCommentById(commentId);
+        if(!memberId.equals(comment.getMember().getMemberId())){
+            throw new CustomDeleteException(ErrorCode.DELETE_PERMISSION_REJECTED_USER);
+        }
+        commentRepository.delete(comment);
+    }
 }

@@ -71,5 +71,10 @@ public class CommentController {
 
 
     /*댓글 삭제*/
-
+    @DeleteMapping("/{commentId}")
+    public String deleteComment(@PathVariable(name = "commentId") Long id,
+                             @RequestParam(name = "memberId") Long memberId){
+        commentService.deleteComment(id, memberId);
+        return "성공적으로 삭제되었습니다.";
+    }
 }
