@@ -52,7 +52,7 @@ public class PostController {
     /* 게시글 수정 */
     @PatchMapping("/{postId}")
     public PostResponseDto updatePost(@PathVariable(name = "postId") Long id,
-                                           @RequestBody @Valid final PostUpdateRequestDto requestDto){
+                                      @RequestBody @Valid final PostUpdateRequestDto requestDto){
         Long postId = postService.updatePost(id, requestDto);
         Post post = postService.findPostById(postId);
         return PostResponseDto.from(post, post.getMember().getNickname());

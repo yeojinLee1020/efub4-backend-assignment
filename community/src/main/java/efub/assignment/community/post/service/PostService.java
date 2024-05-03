@@ -1,5 +1,7 @@
 package efub.assignment.community.post.service;
 
+import efub.assignment.community.board.domain.Board;
+import efub.assignment.community.board.service.BoardService;
 import efub.assignment.community.member.domain.Member;
 import efub.assignment.community.member.service.MemberService;
 import efub.assignment.community.post.domain.Post;
@@ -19,10 +21,12 @@ import java.util.List;
 public class PostService {
     private final PostRepository postRepository;
     private final MemberService memberService;
+    private final BoardService boardService;
 
     public Post createNewPost(PostRequestDto requestDto){
         Member member = memberService.findMemberById(Long.parseLong(requestDto.getMemberId()));
-        Post post = requestDto.toEntity(member);
+        Board board = boardService.findBoardById(Long.parseLong(requestDto.getBoardId()));
+        Post post = requestDto.toEntity(board, member);
         Post savedPost = postRepository.save(post);
         return savedPost;
 

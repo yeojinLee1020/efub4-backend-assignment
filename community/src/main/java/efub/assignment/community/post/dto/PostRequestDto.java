@@ -1,5 +1,6 @@
 package efub.assignment.community.post.dto;
 
+import efub.assignment.community.board.domain.Board;
 import efub.assignment.community.member.domain.Member;
 import efub.assignment.community.post.domain.Post;
 import jakarta.validation.constraints.NotBlank;
@@ -12,6 +13,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class PostRequestDto {
+
+    @NotBlank(message = "게시판 id는 필수입니다.")
+    private String boardId;
+
     @NotBlank(message = "계정 id는 필수입니다.")
     private String memberId;
 
@@ -24,8 +29,9 @@ public class PostRequestDto {
     @NotBlank(message = "내용은 필수입니다.")
     private String content;
 
-    public Post toEntity(Member member){
+    public Post toEntity(Board board, Member member){
         return Post.builder()
+                .board(board)
                 .member(member)
                 .anonymity(anonymity)
                 .title(this.title)

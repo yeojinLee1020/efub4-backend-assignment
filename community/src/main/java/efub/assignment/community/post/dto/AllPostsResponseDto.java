@@ -9,6 +9,6 @@ import java.util.List;
 @AllArgsConstructor
 public class AllPostsResponseDto {
     private List<PostResponseDto> posts;
-    private long count;
+    private Long count;
 
 }

@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class PostResponseDto {
     private Long postId;
+    private Long boardId;
     private String writerNickName;
     private boolean anonymity;
     private String title;
@@ -23,6 +24,7 @@ public class PostResponseDto {
     public static PostResponseDto from(Post post, String writerNickName){
         return new PostResponseDto(
                 post.getPostId(),
+                post.getBoard().getBoardId(),
                 writerNickName,
                 post.getAnonymity(),
                 post.getTitle(),

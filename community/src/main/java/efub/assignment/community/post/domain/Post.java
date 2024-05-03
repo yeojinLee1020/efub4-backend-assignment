@@ -1,5 +1,6 @@
 package efub.assignment.community.post.domain;
 
+import efub.assignment.community.board.domain.Board;
 import efub.assignment.community.global.entity.BaseTimeEntity;
 import efub.assignment.community.member.domain.Member;
 import efub.assignment.community.post.dto.PostUpdateRequestDto;
@@ -19,6 +20,10 @@ public class Post extends BaseTimeEntity {
     private Long postId;
 
     @ManyToOne
+    @JoinColumn(name = "board_id", updatable = false)
+    private Board board;
+
+    @ManyToOne
     @JoinColumn(name = "member_id", updatable = false)
     private Member member;
 
@@ -33,7 +38,8 @@ public class Post extends BaseTimeEntity {
 
 
     @Builder
-    public Post(Member member, Boolean anonymity, String title, String content) {
+    public Post(Board board, Member member, Boolean anonymity, String title, String content) {
+        this.board = board;
         this.member = member;
         this.anonymity = anonymity;
         this.title = title;
