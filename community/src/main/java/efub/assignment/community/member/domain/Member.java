@@ -26,7 +26,7 @@ public class Member extends BaseTimeEntity {
     private  String encodePassword;
 
     // nickname
-    @Column(nullable = false, updatable = false, length = 16)
+    @Column(nullable = false, updatable = true, length = 16)
     private String nickname;
 
     // 학번
