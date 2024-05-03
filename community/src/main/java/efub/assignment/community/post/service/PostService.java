@@ -2,6 +2,8 @@ package efub.assignment.community.post.service;
 
 import efub.assignment.community.board.domain.Board;
 import efub.assignment.community.board.service.BoardService;
+import efub.assignment.community.exception.CustomDeleteException;
+import efub.assignment.community.exception.ErrorCode;
 import efub.assignment.community.member.domain.Member;
 import efub.assignment.community.member.service.MemberService;
 import efub.assignment.community.post.domain.Post;
@@ -51,15 +53,21 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public Long updatePost(Long id, PostUpdateRequestDto requestDto) {
+    public Long updatePost(Long id, Long memberId, PostUpdateRequestDto requestDto) {
         Post post = postRepository.findById(id)
                 .orElseThrow(()-> new EntityNotFoundException("해당 id를 가진 post를 찾을 수 없습니다."));
+        if(!memberId.equals(post.getMember().getMemberId())){
+            throw new CustomDeleteException(ErrorCode.UPDATE_PERMISSION_REJECTED_USER);
+        }
         post.update(requestDto);
         return post.getPostId();
     }
 
-    public void deletePost(Long postId) {
+    public void deletePost(Long postId, Long memberId) {
         Post post = findPostById(postId);
+        if(!memberId.equals(post.getMember().getMemberId())){
+            throw new CustomDeleteException(ErrorCode.DELETE_PERMISSION_REJECTED_USER);
+        }
         postRepository.delete(post);
     }
 }

@@ -52,16 +52,18 @@ public class PostController {
     /* 게시글 수정 */
     @PatchMapping("/{postId}")
     public PostResponseDto updatePost(@PathVariable(name = "postId") Long id,
+                                      @RequestParam(name = "memberId") Long memberId,
                                       @RequestBody @Valid final PostUpdateRequestDto requestDto){
-        Long postId = postService.updatePost(id, requestDto);
+        Long postId = postService.updatePost(id, memberId, requestDto);
         Post post = postService.findPostById(postId);
         return PostResponseDto.from(post, post.getMember().getNickname());
     }
 
     /* 게시글 삭제 */
     @DeleteMapping("/{postId}")
-    public String deletePost(@PathVariable(name = "postId") Long id){
-        postService.deletePost(id);
+    public String deletePost(@PathVariable(name = "postId") Long id,
+                             @RequestParam(name = "memberId") Long memberId){
+        postService.deletePost(id, memberId);
         return "성공적으로 삭제되었습니다.";
     }
 }
