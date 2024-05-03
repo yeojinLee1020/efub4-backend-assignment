@@ -1,5 +1,6 @@
 package efub.assignment.community.comment.domain;
 
+import efub.assignment.community.comment.dto.CommentUpdateRequestDto;
 import efub.assignment.community.global.entity.BaseTimeEntity;
 import efub.assignment.community.member.domain.Member;
 import efub.assignment.community.post.domain.Post;
@@ -39,6 +40,10 @@ public class Comment extends BaseTimeEntity {
         this.member = member;
         this.anonymity = anonymity;
         this.content = content;
+    }
+
+    public void update(CommentUpdateRequestDto requestDto) {
+        this.content = requestDto.getContent();
     }
 }
 

@@ -4,8 +4,8 @@ import efub.assignment.community.comment.domain.Comment;
 import efub.assignment.community.comment.dto.AllCommentsResponseDto;
 import efub.assignment.community.comment.dto.CommentRequestDto;
 import efub.assignment.community.comment.dto.CommentResponseDto;
+import efub.assignment.community.comment.dto.CommentUpdateRequestDto;
 import efub.assignment.community.comment.service.CommentService;
-import efub.assignment.community.post.dto.PostRequestDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -60,6 +60,16 @@ public class CommentController {
     }
 
     /*댓글 수정*/
+    @PatchMapping("/{commentId}")
+    public CommentResponseDto updateComment(@PathVariable(name = "commentId") Long id,
+                                      @RequestParam(name = "memberId") Long memberId,
+                                      @RequestBody @Valid final CommentUpdateRequestDto requestDto){
+        Long commentId = commentService.updateComment(id, memberId, requestDto);
+        Comment comment = commentService.findCommentById(commentId);
+        return CommentResponseDto.from(comment);
+    }
+
+
     /*댓글 삭제*/
 
 }
