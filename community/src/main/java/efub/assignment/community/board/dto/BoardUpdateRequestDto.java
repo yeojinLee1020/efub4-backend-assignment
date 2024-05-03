@@ -13,7 +13,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BoardUpdateRequestDto {
 
-    @NotBlank(message = "변경할 게시판 주인 Id를 입력해주세요")
+    @NotBlank(message = "현재 사용자의 Id를 입력해주세요")
     private String memberId;
+
+    @NotBlank(message = "변경할 게시판 주인 Id를 입력해주세요")
+    private String newHostId;
 
 }

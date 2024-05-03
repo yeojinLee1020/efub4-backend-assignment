@@ -40,8 +40,15 @@ public class BoardService {
     public Long update(Long boardId, BoardUpdateRequestDto requestDto){
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(()-> new EntityNotFoundException("해당 id를 가진 board를 찾을 수 없습니다."));
+
+        Long newHostId = Long.parseLong(requestDto.getNewHostId());
         Long memberId = Long.parseLong(requestDto.getMemberId());
-        Member member = memberService.findMemberById(memberId);
+
+        if(!memberId.equals(board.getMember().getMemberId())){ // 게시판 주인이 아닌 경우 수정 권한 없음 예외 처리
+            throw new CustomDeleteException(UPDATE_PERMISSION_REJECTED_USER);
+        }
+
+        Member member = memberService.findMemberById(newHostId);
         board.updateBoard(member);
         return board.getBoardId();
     }

@@ -35,11 +35,11 @@ public class BoardController {
 
     /* 게시판 수정 */
     @PatchMapping("/{boardId}")
-    public BoardResponseDto update(@PathVariable final Long boardId, @RequestBody @Valid final BoardUpdateRequestDto requestDto){
+    public BoardResponseDto update(@PathVariable final Long boardId,
+                                   @RequestBody @Valid final BoardUpdateRequestDto requestDto){
         Long id = boardService.update(boardId, requestDto);
         Board findBoard = boardService.findBoardById(id);
         return BoardResponseDto.from(findBoard);
-
     }
 
     /* 게시판 삭제 */
