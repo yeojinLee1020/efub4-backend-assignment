@@ -32,7 +32,7 @@ public class CommentController {
     @GetMapping("/{postId}")
     public AllCommentsResponseDto getAllCommentsInPost(@PathVariable(name="postId") Long id){
         List<CommentResponseDto> list = new ArrayList<>();
-        List<Comment> comments = commentService.findAllComents();
+        List<Comment> comments = commentService.findAllComments();
         for (Comment comment: comments) {
             if(id.equals(comment.getPost().getPostId())){
                 CommentResponseDto dto = CommentResponseDto.from(comment);

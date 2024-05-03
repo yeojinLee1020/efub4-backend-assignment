@@ -35,7 +35,7 @@ public class CommentService {
     }
 
     @Transactional(readOnly = true)
-    public List<Comment> findAllComents() {
+    public List<Comment> findAllComments() {
         List<Comment> comments = commentRepository.findAll();
         return comments;
     }
@@ -45,6 +45,7 @@ public class CommentService {
         return commentRepository.count();
     }
 
+    @Transactional(readOnly = true)
     public List<Comment> findAllCommentsByMember(Long id) {
         List<Comment> commentsByMember = new ArrayList<>();
         List<Comment> comments = commentRepository.findAll();
@@ -57,6 +58,7 @@ public class CommentService {
         return commentsByMember;
     }
 
+    @Transactional(readOnly = true)
     public Long updateComment(Long id, Long memberId, CommentUpdateRequestDto requestDto) {
         Comment comment = commentRepository.findById(id)
                 .orElseThrow(()-> new EntityNotFoundException("해당 id를 가진 comment를 찾을 수 없습니다."));
@@ -70,7 +72,7 @@ public class CommentService {
     @Transactional(readOnly = true)
     public Comment findCommentById(Long commentId) {
         Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(()->new EntityNotFoundException("해당 id를 가진 post를 찾을 수 없습니다. id=" + commentId));
+                .orElseThrow(()->new EntityNotFoundException("해당 id를 가진 comment를 찾을 수 없습니다. id=" + commentId));
         return comment;
     }
 
