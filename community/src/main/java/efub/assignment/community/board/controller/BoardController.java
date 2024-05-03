@@ -44,8 +44,9 @@ public class BoardController {
 
     /* 게시판 삭제 */
     @DeleteMapping("/{boardId}")
-    public String deleteBoard(@PathVariable(name = "boardId")Long id){
-        boardService.deleteBoard(id);
+    public String deleteBoard(@PathVariable(name = "boardId")Long id,
+                              @RequestParam(name = "memberId") Long memberId){ // requestparameter로 삭제하려는 사용자 id 받아옴 (권한 확인 위함)
+        boardService.deleteBoard(id, memberId);
         return "성공적으로 삭제되었습니다";
     }
 }
