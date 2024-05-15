@@ -1,10 +1,8 @@
 package efub.assignment.community.comment.controller;
 
 import efub.assignment.community.comment.domain.Comment;
-import efub.assignment.community.comment.dto.AllCommentsResponseDto;
-import efub.assignment.community.comment.dto.CommentRequestDto;
-import efub.assignment.community.comment.dto.CommentResponseDto;
-import efub.assignment.community.comment.dto.CommentUpdateRequestDto;
+import efub.assignment.community.comment.dto.*;
+import efub.assignment.community.comment.service.CommentHeartService;
 import efub.assignment.community.comment.service.CommentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +17,7 @@ import java.util.List;
 @RequestMapping("/comments")
 public class CommentController {
     private final CommentService commentService;
+    private final CommentHeartService commentHeartService;
 
     /*댓글 생성*/
     @PostMapping
@@ -76,5 +75,21 @@ public class CommentController {
                              @RequestParam(name = "memberId") Long memberId){
         commentService.deleteComment(id, memberId);
         return "성공적으로 삭제되었습니다.";
+    }
+
+    /* 좋아요 생성 */
+    @PostMapping("/{commentId}/hearts")
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public String createCommentHeart(@PathVariable final Long commentId, @RequestBody final MemberInfoRequestDto requestDto) {
+        commentHeartService.create(commentId, requestDto);
+        return "좋아요를 눌렀습니다";
+    }
+
+    /* 좋아요 삭제 */
+    @DeleteMapping("/{commentId}/hearts")
+    @ResponseStatus(value = HttpStatus.OK)
+    public String deleteCommentHeart(@PathVariable final Long commentId, @RequestParam final Long memberId) {
+        commentHeartService.delete(commentId,memberId);
+        return "좋아요를 취소했습니다";
     }
 }
