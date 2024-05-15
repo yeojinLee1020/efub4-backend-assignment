@@ -10,6 +10,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -36,6 +39,8 @@ public class Post extends BaseTimeEntity {
     @Column(nullable = false, updatable = true, length = 1000)
     private String content;
 
+    @OneToMany(mappedBy = "post" ,cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PostHeart> postHeartList = new ArrayList<>();
 
     @Builder
     public Post(Board board, Member member, Boolean anonymity, String title, String content) {

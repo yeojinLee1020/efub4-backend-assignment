@@ -1,10 +1,8 @@
 package efub.assignment.community.post.controller;
 
 import efub.assignment.community.post.domain.Post;
-import efub.assignment.community.post.dto.AllPostsResponseDto;
-import efub.assignment.community.post.dto.PostRequestDto;
-import efub.assignment.community.post.dto.PostResponseDto;
-import efub.assignment.community.post.dto.PostUpdateRequestDto;
+import efub.assignment.community.post.dto.*;
+import efub.assignment.community.post.service.PostHeartService;
 import efub.assignment.community.post.service.PostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +17,7 @@ import java.util.List;
 @RequestMapping("/posts")
 public class PostController {
     private final PostService postService;
+    private final PostHeartService postHeartService;
 
     /* 게시글 생성 */
     @PostMapping()
@@ -65,5 +64,21 @@ public class PostController {
                              @RequestParam(name = "memberId") Long memberId){
         postService.deletePost(id, memberId);
         return "성공적으로 삭제되었습니다.";
+    }
+
+    /* 좋아요 생성 */
+    @PostMapping("/{postId}/hearts")
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public String createPostHeart(@PathVariable final Long postId, @RequestBody final HeartRequestDto requestDto) {
+        postHeartService.create(postId, requestDto);
+        return "좋아요를 눌렀습니다";
+    }
+
+    /* 좋아요 삭제 */
+    @DeleteMapping("/{postId}/hearts")
+    @ResponseStatus(value = HttpStatus.OK)
+    public String deletePostHeart(@PathVariable final Long postId, @RequestParam final Long memberId) {
+        postHeartService.delete(postId,memberId);
+        return "좋아요를 취소했습니다";
     }
 }
