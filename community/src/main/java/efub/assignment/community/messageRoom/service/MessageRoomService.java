@@ -53,4 +53,8 @@ public class MessageRoomService {
         mergedList.addAll(messageRoomWhichIReceive);
         return mergedList;
     }
+
+    public void deleteMessageRoom(Long messageRoomId) {
+        messageRoomRepository.deleteById(messageRoomId);
+    }
 }

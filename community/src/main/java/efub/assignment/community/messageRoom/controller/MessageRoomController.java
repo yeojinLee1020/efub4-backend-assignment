@@ -49,4 +49,11 @@ public class MessageRoomController {
         return new MessageRoomListResponseDto(list);
     }
 
+    // 쪽지방 삭제
+    @DeleteMapping("/{messageRoomId}")
+    public String deleteMessageRoom(@PathVariable(name = "messageRoomId") Long messageRoomId){
+        messageRoomService.deleteMessageRoom(messageRoomId);
+        return "쪽지방이 성공적으로 삭제되었습니다";
+    }
+
 }
