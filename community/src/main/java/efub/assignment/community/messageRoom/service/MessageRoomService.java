@@ -11,6 +11,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -37,5 +40,17 @@ public class MessageRoomService {
         Member recipient = memberService.findMemberById(recipientId);
         MessageRoom messageRoom = messageRoomRepository.findByPostAndFirstSenderAndFirstRecipient(post, sender, recipient);
         return messageRoom;
+    }
+
+    // 내가 있는 모든 쪽지방 조회
+    public List<MessageRoom> findAllMessageRoomByMemberId(Long memberId) {
+        Member member = memberService.findMemberById(memberId);
+        List<MessageRoom> messageRoomWhichISend = messageRoomRepository.findByFirstSender(member);
+        List<MessageRoom> messageRoomWhichIReceive = messageRoomRepository.findByFirstRecipient(member);
+        // 두 리스트 컬렉션을 합치는데 중복성 제거를 위해 겹치는 것 remove하고 add한 새로운 리스트 컬렉션 만듦
+        List<MessageRoom> mergedList = new ArrayList<>(messageRoomWhichISend);
+        mergedList.removeAll(messageRoomWhichIReceive);
+        mergedList.addAll(messageRoomWhichIReceive);
+        return mergedList;
     }
 }

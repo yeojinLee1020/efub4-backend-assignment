@@ -1,14 +1,15 @@
 package efub.assignment.community.messageRoom.controller;
 
 import efub.assignment.community.messageRoom.domain.MessageRoom;
-import efub.assignment.community.messageRoom.dto.MessageRoomRequestDto;
-import efub.assignment.community.messageRoom.dto.MessageRoomResponseDto;
-import efub.assignment.community.messageRoom.dto.MessageRoomStatusResponseDto;
+import efub.assignment.community.messageRoom.dto.*;
 import efub.assignment.community.messageRoom.service.MessageRoomService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -33,6 +34,19 @@ public class MessageRoomController {
                                                           @PathVariable(name = "recipientId") Long recipientId){
         MessageRoom messageRoom = messageRoomService.findPresenceOfMessageRoom(postId, senderId, recipientId);
         return new MessageRoomStatusResponseDto(messageRoom);
+    }
+
+    // 쪽지방 목록 조회 (사용자의 모든 쪽지방 조회)
+    @GetMapping("/{memberId}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public MessageRoomListResponseDto getMessageRoomList(@PathVariable(name = "memberId") Long memberId){
+        List<OneMessageRoomResponseDto> list =  new ArrayList<>();
+        List<MessageRoom> messageRooms = messageRoomService.findAllMessageRoomByMemberId(memberId);
+        for(MessageRoom mr : messageRooms){
+            OneMessageRoomResponseDto dto = OneMessageRoomResponseDto.from(mr);
+            list.add(dto);
+        }
+        return new MessageRoomListResponseDto(list);
     }
 
 }
