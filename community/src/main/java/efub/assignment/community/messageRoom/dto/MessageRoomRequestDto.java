@@ -14,23 +14,23 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MessageRoomRequestDto {
 
+    @NotBlank(message = "해당 게시글 Id는 필수입니다.")
+    private String postId;
+
     @NotBlank(message = "보내는 사람 Id는 필수입니다.")
     private String firstSenderId;
 
     @NotBlank(message = "받는 사람 Id는 필수입니다.")
     private String firstRecipientId;
 
-    @NotBlank(message = "해당 게시글 Id는 필수입니다.")
-    private String postId;
-
     @NotBlank(message = "첫쪽지 내용은 필수입니다.")
     private String content;
 
-    public MessageRoom toEntity(Member sender, Member recipient, Post post){
+    public MessageRoom toEntity(Post post, Member sender, Member recipient){
         return MessageRoom.builder()
+                .post(post)
                 .firstSender(sender)
                 .firstRecipient(recipient)
-                .post(post)
                 .content(this.content)
                 .build();
     }

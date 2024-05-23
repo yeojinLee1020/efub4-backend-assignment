@@ -19,14 +19,23 @@ public class MessageRoomService {
     private final MessageRoomRepository messageRoomRepository;
     private final MemberService memberService;
     private final PostService postService;
+
+    // 쪽지방 생성
     public MessageRoom createNewMessage(MessageRoomRequestDto requestDto) {
         Member firstSender = memberService.findMemberById(Long.parseLong(requestDto.getFirstSenderId()));
         Member firstRecipient = memberService.findMemberById(Long.parseLong(requestDto.getFirstRecipientId()));
         Post post = postService.findPostById(Long.parseLong(requestDto.getPostId()));
-        MessageRoom messageRoom = requestDto.toEntity(firstSender,firstRecipient,post);
+        MessageRoom messageRoom = requestDto.toEntity(post, firstSender,firstRecipient);
         MessageRoom savedMessageRoom = messageRoomRepository.save(messageRoom);
         return savedMessageRoom;
+    }
 
-
+    // 쪽지방 존재 여부 확인 위해 해당 쪽지방 찾는 메서드 (없으면 null)
+    public MessageRoom findPresenceOfMessageRoom(Long postId, Long senderId, Long recipientId) {
+        Post post = postService.findPostById(postId);
+        Member sender = memberService.findMemberById(senderId);
+        Member recipient = memberService.findMemberById(recipientId);
+        MessageRoom messageRoom = messageRoomRepository.findByPostAndFirstSenderAndFirstRecipient(post, sender, recipient);
+        return messageRoom;
     }
 }

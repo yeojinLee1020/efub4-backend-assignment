@@ -3,6 +3,7 @@ package efub.assignment.community.messageRoom.controller;
 import efub.assignment.community.messageRoom.domain.MessageRoom;
 import efub.assignment.community.messageRoom.dto.MessageRoomRequestDto;
 import efub.assignment.community.messageRoom.dto.MessageRoomResponseDto;
+import efub.assignment.community.messageRoom.dto.MessageRoomStatusResponseDto;
 import efub.assignment.community.messageRoom.service.MessageRoomService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,5 +25,14 @@ public class MessageRoomController {
                 savedMessageRoom.getFirstRecipient().getMemberId());
     }
 
+    // 쪽지방 여부 조회
+    @GetMapping("/{postId}/{senderId}/{recipientId}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public MessageRoomStatusResponseDto MessageRoomExists(@PathVariable(name = "postId") Long postId,
+                                                          @PathVariable(name = "senderId") Long senderId,
+                                                          @PathVariable(name = "recipientId") Long recipientId){
+        MessageRoom messageRoom = messageRoomService.findPresenceOfMessageRoom(postId, senderId, recipientId);
+        return new MessageRoomStatusResponseDto(messageRoom);
+    }
 
 }

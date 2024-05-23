@@ -19,6 +19,10 @@ public class MessageRoom extends BaseTimeEntity {
     private Long messageRoomId;
 
     @ManyToOne
+    @JoinColumn(name = "post_id", updatable = false)
+    private Post post;
+
+    @ManyToOne
     @JoinColumn(name = "firstSender_id", updatable = false)
     private Member firstSender;
 
@@ -26,18 +30,16 @@ public class MessageRoom extends BaseTimeEntity {
     @JoinColumn(name = "firstRecipient_id", updatable = false)
     private Member firstRecipient;
 
-    @ManyToOne
-    @JoinColumn(name = "post_id", updatable = false)
-    private Post post;
+
 
     @Column(name = "content", length = 500)
     private String content;
 
     @Builder
-    public MessageRoom(Member firstSender, Member firstRecipient, Post post, String content) {
+    public MessageRoom(Post post, Member firstSender, Member firstRecipient, String content) {
+        this.post = post;
         this.firstSender = firstSender;
         this.firstRecipient = firstRecipient;
-        this.post = post;
         this.content = content;
     }
 }
