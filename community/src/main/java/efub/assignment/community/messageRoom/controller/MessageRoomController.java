@@ -3,6 +3,7 @@ package efub.assignment.community.messageRoom.controller;
 import efub.assignment.community.messageRoom.domain.MessageRoom;
 import efub.assignment.community.messageRoom.dto.*;
 import efub.assignment.community.messageRoom.service.MessageRoomService;
+import efub.assignment.community.notification.service.NotificationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,13 +16,19 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/messageRooms")
 public class MessageRoomController {
+
     private final MessageRoomService messageRoomService;
+    private final NotificationService notificationService;
 
     // 쪽지방 생성
     @PostMapping()
     @ResponseStatus(value = HttpStatus.CREATED)
     public MessageRoomResponseDto createNewMessageRoom(@RequestBody @Valid final MessageRoomRequestDto requestDto){
         MessageRoom savedMessageRoom = messageRoomService.createNewMessage(requestDto);
+
+        // 알림 생성
+        notificationService.createMessageRoomNotice(savedMessageRoom);
+
         return MessageRoomResponseDto.from(savedMessageRoom, savedMessageRoom.getFirstSender().getMemberId(),
                 savedMessageRoom.getFirstRecipient().getMemberId());
     }

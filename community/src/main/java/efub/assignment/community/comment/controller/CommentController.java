@@ -4,6 +4,7 @@ import efub.assignment.community.comment.domain.Comment;
 import efub.assignment.community.comment.dto.*;
 import efub.assignment.community.comment.service.CommentHeartService;
 import efub.assignment.community.comment.service.CommentService;
+import efub.assignment.community.notification.service.NotificationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,12 +19,16 @@ import java.util.List;
 public class CommentController {
     private final CommentService commentService;
     private final CommentHeartService commentHeartService;
+    private final NotificationService notificationService;
 
     /*댓글 생성*/
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
     public CommentResponseDto createComment(@RequestBody @Valid final CommentRequestDto requestDto){
         Comment savedComment = commentService.createNewComment(requestDto);
+        //알림생성
+        notificationService.createCommentNotice(savedComment);
+
         return CommentResponseDto.from(savedComment);
     }
 

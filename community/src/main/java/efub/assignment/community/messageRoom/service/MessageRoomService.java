@@ -5,6 +5,8 @@ import efub.assignment.community.member.service.MemberService;
 import efub.assignment.community.messageRoom.domain.MessageRoom;
 import efub.assignment.community.messageRoom.dto.MessageRoomRequestDto;
 import efub.assignment.community.messageRoom.repository.MessageRoomRepository;
+import efub.assignment.community.notification.domain.Notification;
+import efub.assignment.community.notification.service.NotificationService;
 import efub.assignment.community.post.domain.Post;
 import efub.assignment.community.post.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,8 @@ public class MessageRoomService {
     private final MessageRoomRepository messageRoomRepository;
     private final MemberService memberService;
     private final PostService postService;
+    private final NotificationService notificationService;
+
 
     // 쪽지방 생성
     public MessageRoom createNewMessage(MessageRoomRequestDto requestDto) {

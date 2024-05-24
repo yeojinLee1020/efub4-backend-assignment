@@ -83,4 +83,16 @@ public class CommentService {
         }
         commentRepository.delete(comment);
     }
+
+    // 해당 게시글의 모든 댓글 가져오기
+    public List<Comment> findAllCommentsByPost(Long id) {
+        List<Comment> commentsByPost = new ArrayList<>();
+        List<Comment> comments = commentRepository.findAll();
+        for (Comment comment: comments) {
+            if(id.equals(comment.getPost().getPostId())){
+                commentsByPost.add(comment);
+            }
+        }
+        return commentsByPost;
+    }
 }
