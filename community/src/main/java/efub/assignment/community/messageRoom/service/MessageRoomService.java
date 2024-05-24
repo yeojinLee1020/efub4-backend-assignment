@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -57,4 +58,5 @@ public class MessageRoomService {
     public void deleteMessageRoom(Long messageRoomId) {
         messageRoomRepository.deleteById(messageRoomId);
     }
+
 }
