@@ -59,4 +59,15 @@ public class MessageRoomService {
         messageRoomRepository.deleteById(messageRoomId);
     }
 
+    // 쪽지방의 상대방Id 반환
+    public Long findOpponentId(Long messageRoomId, Long inquireId) {
+        MessageRoom messageRoom = messageRoomRepository.findByMessageRoomId(messageRoomId);
+        Member member = messageRoom.getFirstSender();
+        if (member.getMemberId().equals(inquireId)) {
+            return messageRoom.getFirstRecipient().getMemberId();
+        }
+        else {
+            return member.getMemberId();
+        }
+    }
 }

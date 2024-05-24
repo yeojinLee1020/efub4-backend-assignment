@@ -12,6 +12,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
+import java.util.List;
+
 import static efub.assignment.community.exception.ErrorCode.NOT_MEMBER_IN_THIS_MESSAGEROOM;
 
 
@@ -42,4 +45,18 @@ public class MessageService {
     public Boolean isMemberOfMessageRoom(MessageRoom messageRoom, Member member){
         return member.equals(messageRoom.getFirstSender()) || member.equals(messageRoom.getFirstRecipient());
     }
+
+    // 해당 쪽지방의 모든 쪽지 가져오기
+    public List<Message> findAllMessageRoomMessage(Long messageRoomId) {
+        MessageRoom messageRoom = messageRoomRepository.findByMessageRoomId(messageRoomId);
+        return messageRepository.findAllByMessageRoom(messageRoom);
+    }
+
+    // 메시지를 보낸 사람인지 확인
+    // 메시지를 보낸 사람이라면 true 반환, 아니라면 false
+    public Boolean isSender(Message message, Long inquireId) {
+        Member inquire = memberService.findMemberById(inquireId);
+        return inquire.equals(message.getSender());
+    }
+
 }
