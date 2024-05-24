@@ -22,7 +22,7 @@ public class CommentHeartService {
     private final MemberService memberService;
 
     /* 댓글 좋아요 등록 */
-    public void create(Long commentId, MemberInfoRequestDto requestDto) { // 여기서 MemberInfoRequestDto가 HeartRequestDto랑 하는 역할도 똑같고 내용도 같은 굳이 두개의 dto를 구분해서 써야하나?
+    public void create(Long commentId, MemberInfoRequestDto requestDto) {
         Member member = memberService.findMemberById(requestDto.getMemberId());
         Comment comment = commentService.findCommentById(commentId);
         if (isExistsByWriterAndComment(member, comment)) {

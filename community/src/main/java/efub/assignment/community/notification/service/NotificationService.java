@@ -1,7 +1,6 @@
 package efub.assignment.community.notification.service;
 
 import efub.assignment.community.comment.domain.Comment;
-import efub.assignment.community.member.domain.Member;
 import efub.assignment.community.member.service.MemberService;
 import efub.assignment.community.messageRoom.domain.MessageRoom;
 import efub.assignment.community.notification.domain.Notification;
