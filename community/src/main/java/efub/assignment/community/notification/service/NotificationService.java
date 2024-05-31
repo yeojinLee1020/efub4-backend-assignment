@@ -4,11 +4,13 @@ import efub.assignment.community.comment.domain.Comment;
 import efub.assignment.community.member.service.MemberService;
 import efub.assignment.community.messageRoom.domain.MessageRoom;
 import efub.assignment.community.notification.domain.Notification;
+import efub.assignment.community.notification.dto.NotificationResponseDto;
 import efub.assignment.community.notification.repository.NotificationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -36,8 +38,14 @@ public class NotificationService {
 
     // 사용자의 모든 알림 찾기
     @Transactional(readOnly = true) // 피드백 반영 : 조회 전용 메서드에서 성능 개선에 도움
-    public List<Notification> findNotificationByMemberId(Long id){
-        return notificationRepository.findAllByMemberId(id);
+    public List<NotificationResponseDto> findNotificationByMemberId(Long id){
+        List<NotificationResponseDto> list = new ArrayList<>();
+        List<Notification> notifications = notificationRepository.findAllByMemberId(id);
+        for(Notification notic : notifications){
+            NotificationResponseDto dto = NotificationResponseDto.from(notic);
+            list.add(dto);
+        }
+        return list;
     }
 }
 

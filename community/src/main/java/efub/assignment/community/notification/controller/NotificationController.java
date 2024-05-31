@@ -18,13 +18,7 @@ public class NotificationController {
     private final NotificationService notificationService;
 
     @GetMapping("/{inquirerId}")
-    public AllNotificationResponseDto getNotification (@PathVariable (name="inquirerId") Long id){
-        List<NotificationResponseDto> list = new ArrayList<>();
-        List<Notification> notifications = notificationService.findNotificationByMemberId(id);
-        for(Notification notic : notifications){
-            NotificationResponseDto dto = NotificationResponseDto.from(notic);
-            list.add(dto);
-        }
-        return new AllNotificationResponseDto(list);
+    public AllNotificationResponseDto getNotification (@PathVariable (name="inquirerId") final Long inquirerId){
+        return new AllNotificationResponseDto(notificationService.findNotificationByMemberId(inquirerId));
     }
 }
