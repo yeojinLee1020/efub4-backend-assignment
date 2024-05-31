@@ -22,8 +22,7 @@ public class NotificationService {
         String type = "쪽지방";
         String content = "새로운 쪽지방이 생겼어요";
         Notification notification = new Notification(memberId, type,content, messageRoom.getCreatedDate());
-        Notification savedNotification = notificationRepository.save(notification);
-        return savedNotification;
+        return notificationRepository.save(notification);
     }
 
     public Notification createCommentNotice(Comment comment){
@@ -31,14 +30,12 @@ public class NotificationService {
         String type = comment.getPost().getBoard().getBoardName();
         String content = "새로운 댓글이 달렸어요 : " + comment.getContent();
         Notification notification = new Notification(memberId,type,content, comment.getCreatedDate());
-        Notification savedNotification = notificationRepository.save(notification);
-        return savedNotification;
+        return notificationRepository.save(notification);
     }
 
     // 사용자의 모든 알림 찾기
     public List<Notification> findNotificationByMemberId(Long id){
-        List<Notification> result = notificationRepository.findAllByMemberId(id);
-        return result;
+        return notificationRepository.findAllByMemberId(id);
     }
 }
 

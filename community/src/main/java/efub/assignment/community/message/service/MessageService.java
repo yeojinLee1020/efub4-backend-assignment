@@ -36,8 +36,7 @@ public class MessageService {
             throw new CustomDeleteException(NOT_MEMBER_IN_THIS_MESSAGEROOM);
         }
         Message message = requestDto.toEntity(messageRoom, sender);
-        Message savedMessage = messageRepository.save(message);
-        return savedMessage;
+        return messageRepository.save(message);
     }
 
     // 주어진 멤버가 해당 쪽지방의 멤버인지 확인

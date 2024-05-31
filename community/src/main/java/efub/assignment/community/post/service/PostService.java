@@ -29,15 +29,13 @@ public class PostService {
         Member member = memberService.findMemberById(Long.parseLong(requestDto.getMemberId()));
         Board board = boardService.findBoardById(Long.parseLong(requestDto.getBoardId()));
         Post post = requestDto.toEntity(board, member);
-        Post savedPost = postRepository.save(post);
-        return savedPost;
+        return postRepository.save(post);
 
     }
 
     @Transactional(readOnly = true)
     public List<Post> findAllPosts() {
-        List<Post> posts = postRepository.findAll();
-        return posts;
+        return postRepository.findAll();
     }
 
     @Transactional(readOnly = true)

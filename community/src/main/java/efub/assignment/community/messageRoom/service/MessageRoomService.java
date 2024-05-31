@@ -34,8 +34,7 @@ public class MessageRoomService {
         Member firstRecipient = memberService.findMemberById(Long.parseLong(requestDto.getFirstRecipientId()));
         Post post = postService.findPostById(Long.parseLong(requestDto.getPostId()));
         MessageRoom messageRoom = requestDto.toEntity(post, firstSender,firstRecipient);
-        MessageRoom savedMessageRoom = messageRoomRepository.save(messageRoom);
-        return savedMessageRoom;
+        return messageRoomRepository.save(messageRoom);
     }
 
     // 쪽지방 존재 여부 확인 위해 해당 쪽지방 찾는 메서드 (없으면 null)
@@ -43,8 +42,7 @@ public class MessageRoomService {
         Post post = postService.findPostById(postId);
         Member sender = memberService.findMemberById(senderId);
         Member recipient = memberService.findMemberById(recipientId);
-        MessageRoom messageRoom = messageRoomRepository.findByPostAndFirstSenderAndFirstRecipient(post, sender, recipient);
-        return messageRoom;
+        return messageRoomRepository.findByPostAndFirstSenderAndFirstRecipient(post, sender, recipient);
     }
 
     // 내가 있는 모든 쪽지방 조회
