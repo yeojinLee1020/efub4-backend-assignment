@@ -63,6 +63,16 @@ public class MessageRoomService {
 
     // 쪽지방의 상대방Id 반환
     public Long findOpponentId(Long messageRoomId, Long inquireId) {
+        // 파라미터 값이 null인 경우 예외 던지기
+        if (messageRoomId == null) {
+            throw new NullPointerException("messageRoomId cannot be null");
+        }
+        if (inquireId == null) {
+            throw new NullPointerException("inquireId cannot be null");
+        }
+
+
+        // 파라미터 값들이 null이 아닌 경우 로직 실행
         MessageRoom messageRoom = messageRoomRepository.findByMessageRoomId(messageRoomId);
         Member member = messageRoom.getFirstSender();
         if (member.getMemberId().equals(inquireId)) {
