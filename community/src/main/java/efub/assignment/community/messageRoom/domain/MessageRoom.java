@@ -15,7 +15,7 @@ public class MessageRoom extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "messageRoom_Id", updatable = false)
+    @Column(name = "message_room_id", updatable = false)
     private Long messageRoomId;
 
     @ManyToOne
@@ -23,11 +23,11 @@ public class MessageRoom extends BaseTimeEntity {
     private Post post;
 
     @ManyToOne
-    @JoinColumn(name = "firstSender_id", updatable = false)
+    @JoinColumn(name = "first_sender_id", updatable = false)
     private Member firstSender;
 
     @ManyToOne
-    @JoinColumn(name = "firstRecipient_id", updatable = false)
+    @JoinColumn(name = "first_recipient_id", updatable = false)
     private Member firstRecipient;
 
 

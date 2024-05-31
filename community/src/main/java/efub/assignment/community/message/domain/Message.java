@@ -21,7 +21,7 @@ public class Message extends BaseTimeEntity {
 
 
     @ManyToOne
-    @JoinColumn(name="messageRoom_id", updatable = false)
+    @JoinColumn(name="message_room_id", updatable = false)
     private MessageRoom messageRoom;
 
     @Column(nullable = false, length = 500)

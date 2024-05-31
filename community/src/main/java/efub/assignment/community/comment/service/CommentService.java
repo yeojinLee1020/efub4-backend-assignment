@@ -87,12 +87,16 @@ public class CommentService {
     // 해당 게시글의 모든 댓글 가져오기
     public List<Comment> findAllCommentsByPost(Long id) {
         List<Comment> commentsByPost = new ArrayList<>();
-        List<Comment> comments = commentRepository.findAll();
+        List<Comment> comments = commentRepository.findAll(); // 모든 댓글 가져오기
         for (Comment comment: comments) {
-            if(id.equals(comment.getPost().getPostId())){
+            if(id.equals(comment.getPost().getPostId())){ // 해당 댓글의 게시글의 주인이 받은 id와 같은 거 골라내기
                 commentsByPost.add(comment);
             }
         }
+
+
+
+
         return commentsByPost;
     }
 }
