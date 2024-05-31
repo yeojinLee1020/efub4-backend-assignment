@@ -7,6 +7,7 @@ import efub.assignment.community.notification.domain.Notification;
 import efub.assignment.community.notification.repository.NotificationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -34,6 +35,7 @@ public class NotificationService {
     }
 
     // 사용자의 모든 알림 찾기
+    @Transactional(readOnly = true) // 피드백 반영 : 조회 전용 메서드에서 성능 개선에 도움
     public List<Notification> findNotificationByMemberId(Long id){
         return notificationRepository.findAllByMemberId(id);
     }
