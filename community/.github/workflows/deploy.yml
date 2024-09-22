@@ -19,8 +19,8 @@ jobs:
 
       - name: Make application.yml
         run: |
-          mkdir ./src/main/resources 
-          cd ./src/main/resources
+          mkdir ./community/src/main/resources 
+          cd ./community/src/main/resources
           touch ./application.yml
           echo "${{ secrets.APPLICATION }}" > ./application.yml
 
@@ -36,7 +36,7 @@ jobs:
 
       - name: Build with Gradle
         run: |
-          cd ./
+          cd ./community
           chmod +x ./gradlew
           ./gradlew build -x test
 
@@ -49,8 +49,8 @@ jobs:
       - name: Docker build & push
         uses: docker/build-push-action@v2
         with:
-          context: ./
-          file: ./Dockerfile
+          context: ./community
+          file: ./community/Dockerfile
           platforms: linux/arm64/v8
           push: true
           tags: ${{ secrets.DOCKER_REPO }}:latest
