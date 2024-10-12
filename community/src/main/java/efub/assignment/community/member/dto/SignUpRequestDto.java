@@ -32,6 +32,8 @@ public class SignUpRequestDto {
     @NotBlank(message = "대학교는 필수입니다.")
     private String university;
 
+
+    @Builder
     public SignUpRequestDto(String email, String password, String nickname, String studentId, String university) {
         this.email = email;
         this.password = password;
@@ -40,7 +42,6 @@ public class SignUpRequestDto {
         this.university = university;
     }
 
-    @Builder
     public Member toEntity() { //dto를 account 엔티티 객체로 변환
         return Member.builder()
                 .email(this.email)
